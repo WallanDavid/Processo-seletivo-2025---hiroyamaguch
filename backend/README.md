@@ -2,8 +2,8 @@
 
 - Login via `POST /auth/login` com `{ email, password }` (seed: `admin@in8.com.br` / `admin123`).
 - Whitelabel por cliente: tabela `clients` com `slug` (host) e `provider` (`brazilian` ou `european`).
-- Produtos: `GET /products` e `GET /products/:id` consultam fornecedor com base no host (`Host` header) ou `?client=`.
-- Banco: SQLite (`data.db`) com `users` e `clients`. `synchronize: true` para facilitar.
+ - Produtos: `GET /products` e `GET /products/:id` consultam fornecedor com base no host (`Host` header) ou `?client=`.
+ - Persistência: para simplificar o MVP e evitar incompatibilidades de Node, os dados de `users` e `clients` são semeados em memória (seed no `onModuleInit`). O DER abaixo representa a modelagem conceitual.
 
 **Endpoints**
 - `POST /auth/login` → retorna `accessToken` (JWT).
@@ -26,7 +26,8 @@
 - `ProductsService` resolve o fornecedor via `ClientsService` usando `Host` ou `?client=`.
 
 **Como rodar**
-- `npm run start:dev` (dev com ts-node-dev) ou `npm run build && npm run start`.
+ - `npm install`
+ - `npm run build && npm run start`
 
 **DER (simplificado)**
 ```mermaid

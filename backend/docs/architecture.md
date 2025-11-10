@@ -21,3 +21,21 @@ flowchart LR
   F --> G[Filter]
   G --> H[Response]
 ```
+
+**DER (conceitual)**
+
+```mermaid
+erDiagram
+  USERS {
+    uuid id PK
+    string email UK
+    string passwordHash
+    string role
+  }
+  CLIENTS {
+    uuid id PK
+    string slug UK
+    string name
+    string provider
+  }
+```

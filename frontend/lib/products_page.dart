@@ -29,11 +29,19 @@ class _ProductsPageState extends State<ProductsPage> {
     final clients = await widget.api.getClients();
     setState(() => _clients = clients);
     if (kIsWeb) {
-      // On web, use the browser host as client slug
-      final host = html.window.location.host;
-      _selectedClient = host.isNotEmpty ? host : clients.isNotEmpty ? clients.first['slug'] : null;
+      // Use hostname (without port). If matches a known client slug, select it.
+      final hostname = html.window.location.hostname; // e.g., brazil.in8.local
+      final match = clients.cast<Map<String, dynamic>>().firstWhere(
+        (c) => c['slug'] == hostname,
+        orElse: () => {},
+      );
+      _selectedClient = (match.isNotEmpty)
+          ? (match['slug'] as String)
+          : clients.isNotEmpty
+              ? clients.first['slug'] as String
+              : null;
     } else {
-      _selectedClient = clients.isNotEmpty ? clients.first['slug'] : null;
+      _selectedClient = clients.isNotEmpty ? clients.first['slug'] as String : null;
     }
     await _loadProducts();
   }

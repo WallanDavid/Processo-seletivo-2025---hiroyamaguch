@@ -13,6 +13,7 @@ class ApiClient {
   Map<String, String> _headers() => {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
+        if (_token != null) 'Authorization': 'Bearer $_token',
       };
 
   Future<String> login(String email, String password) async {
@@ -31,7 +32,7 @@ class ApiClient {
   }
 
   Future<List<dynamic>> getClients() async {
-    final res = await http.get(Uri.parse('$baseUrl/clients'));
+    final res = await http.get(Uri.parse('$baseUrl/clients'), headers: _headers());
     if (res.statusCode == 200) {
       return jsonDecode(res.body) as List<dynamic>;
     }
@@ -44,7 +45,7 @@ class ApiClient {
       if (client != null && client.isNotEmpty) 'client': client,
     };
     final uri = Uri.parse('$baseUrl/products').replace(queryParameters: qs);
-    final res = await http.get(uri);
+    final res = await http.get(uri, headers: _headers());
     if (res.statusCode == 200) {
       final data = jsonDecode(res.body);
       return (data['items'] as List<dynamic>);
@@ -55,7 +56,7 @@ class ApiClient {
   Future<Map<String, dynamic>> getProductById(String id, {String? client}) async {
     final qs = {if (client != null && client.isNotEmpty) 'client': client};
     final uri = Uri.parse('$baseUrl/products/$id').replace(queryParameters: qs);
-    final res = await http.get(uri);
+    final res = await http.get(uri, headers: _headers());
     if (res.statusCode == 200) {
       return jsonDecode(res.body) as Map<String, dynamic>;
     }
