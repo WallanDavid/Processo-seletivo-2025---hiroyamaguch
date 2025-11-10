@@ -1,0 +1,33 @@
+{
+  "info": {
+    "name": "Processo Seletivo 2025 – API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth Login",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "url": {"raw": "http://localhost:3000/auth/login", "host": ["http://localhost"], "port": "3000", "path": ["auth","login"]},
+        "body": {"mode": "raw", "raw": "{\n  \"email\": \"admin@in8.com.br\",\n  \"password\": \"admin123\"\n}"}
+      }
+    },
+    {
+      "name": "List Clients",
+      "request": {"method": "GET", "url": "http://localhost:3000/clients"}
+    },
+    {
+      "name": "List Products (Brazil)",
+      "request": {"method": "GET", "url": "http://localhost:3000/products?client=brazil.in8.local"}
+    },
+    {
+      "name": "List Products (Europe)",
+      "request": {"method": "GET", "url": "http://localhost:3000/products?client=europe.in8.local"}
+    },
+    {
+      "name": "Product by ID (Brazil)",
+      "request": {"method": "GET", "url": "http://localhost:3000/products/1?client=brazil.in8.local"}
+    }
+  ]
+}
